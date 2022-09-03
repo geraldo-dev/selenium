@@ -1,4 +1,3 @@
-from lib2to3.pgen2 import driver
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -8,14 +7,14 @@ brownser = webdriver.Edge()
 
 brownser.get('https://www.youtube.com/')
 
-tag = 'search_query'
-elem = brownser.find_element(By.NAME, tag)
+search_query = brownser.find_element(By.NAME, 'search_query')
+search_query.send_keys('metallica seek and destroy')
+search_query.send_keys(Keys.RETURN)
 
-elem.send_keys('geraldo testando algo kkk')
-sleep(2)
-elem.send_keys(Keys.RETURN)
+sleep(1)
+lnk = brownser.find_element(By.LINK_TEXT, 'Metallica - Seek And Destroy (HD)')
+lnk.click()
 
-
+#like
 sleep(3)
-
-brownser.quit()
+brownser.close()
