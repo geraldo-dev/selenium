@@ -14,15 +14,18 @@ search_btn = drive.find_element(By.CLASS_NAME, 'nav-search-btn').click()
 
 sleep(2)
 cards = drive.find_elements(By.CLASS_NAME, 'ui-search-result__wrapper')
-price = 'price-tag-fraction'
-freete = 'ui-search-item__shipping--free'
-description = 'ui-search-item__title'
+
+datas = []
 
 for card in cards:
-    print('price: ', card.find_element(By.CLASS_NAME, price).text)
-    print('freete: ', card.find_element(By.CLASS_NAME, freete).text)
-    print('description: ', card.find_element(By.CLASS_NAME, description).text)
+    datas.append({
+        'price' : card.find_element(By.CLASS_NAME, 'price-tag-fraction').text,
+        'frete': card.find_element(By.TAG_NAME, 'p').text,
+        'description': card.find_element(By.TAG_NAME, 'h2').text
+    })
 
-sleep(5)
+sleep(2)
+
+print(datas)
 
 drive.close()
