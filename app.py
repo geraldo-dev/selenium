@@ -1,10 +1,20 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.edge.options import Options
 from time import sleep
 
-drive = webdriver.Edge()
+opitons = Options()
+opitons.add_argument('--headless')
 
+drive = webdriver.Edge(options=opitons)
+
+#primeiro entra no site
 drive.get('https://www.mercadolivre.com.br/')
+
+sleep(2)
+#segundo procura um produto
+#pega dados
+#teceiro e par o proximo produto
 
 datas = []
 
