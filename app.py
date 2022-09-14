@@ -1,38 +1,55 @@
+from pydoc import classname
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.options import Options
 from time import sleep
+from bs4 import BeautifulSoup as bs
 
 opitons = Options()
 opitons.add_argument('--headless')
 
 drive = webdriver.Edge(options=opitons)
 
+name_product = ['notebook dell','notebook positivo','notebook ace']
 #primeiro entra no site
-drive.get('https://www.mercadolivre.com.br/')
-
+drive.get('https://lista.mercadolivre.com.br/'+name_product[0])
 sleep(2)
-#segundo procura um produto
-#pega dados
 #teceiro e par o proximo produto
+page = bs(drive.page_source, 'html.parser')
 
-datas = []
-
-search_name = drive.find_element(By.NAME, 'as_word')
-search_name.send_keys('notebook')
-
-search_btn = drive.find_element(By.CLASS_NAME, 'nav-search-btn').click()
-
-boxs = drive.find_elements(By.CLASS_NAME, 'ui-search-result__wrapper')
+list_products = []
 
 
-for box in boxs:
-    datas.append({
-        'price' : box.find_element(By.CLASS_NAME, 'price-tag-fraction').text,
-        'frete': box.find_element(By.TAG_NAME, 'p').text,
-        'description': box.find_element(By.TAG_NAME, 'h2').text
-    })
+boxss = page.find_all('span', {'class':'price-tag-fraction'}) 
+# print('-->', boxs)
+print('-->', boxss)
+# for produto in list_products_find:
+#     print('-->', produto)
+#     #segundo procura um produto
+#     search_name = drive.find_element(By.NAME, 'as_word')
+#     search_name.send_keys('notebook dell')
+#     search_name.click()
+    #li class ui-search-result__wrapper
+    #span class price-tag-fraction
+    #p class ui-search-item__shipping ui-search-item__shipping--free
+    #h2 class ui-search-item__title ui-search-item__group__element shops-custom-secondary-font
 
-print(datas)
+    # search_btn = drive.find_element(By.CLASS_NAME, 'nav-search-btn').click()
+
+    # boxs = page.find_all('div', class_="ui-search-result__content-wrapper shops-custom-secondary-font")
+    # print('....',boxs)
+
+    # sleep(1)
+    # for box in boxs:
+    #     #pega dados
+    #     list_products.append({
+    #         'price' : box.find_element(By.CLASS_NAME, 'price-tag-fraction').text,
+    #         'frete': box.find_element(By.CLASS_NAME, 'ui-search-item__shipping ui-search-item__shipping--free').text,
+    #         'description': box.find_element(By.CLASS_NAME, 'ui-search-item__title ui-search-item__group__element shops-custom-secondary-font').text
+    #     })
+    # search_name.clear()
+    # sleep(1)
+
+# print(list_products)
 
 drive.close()
