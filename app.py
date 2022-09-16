@@ -21,10 +21,8 @@ search_name.send_keys(name_product[0])
 search_btn = drive.find_element(By.XPATH, '/html/body/header/div/form/button').click()
 sleep(0.5)
 #price-tag-fraction span price
-ol = drive.find_element(By.XPATH, '//*[@id="root-app"]/div/div[2]/section/ol[1]')
+products = drive.find_element(By.XPATH, '//*[@id="root-app"]/div/div[2]/section/ol[1]').text
+    
+print(products)
 
-li = ol.find_elements(By.TAG_NAME, 'li')[0]
-print('>>>', li.text)
-
-sleep(3)
 drive.close()
